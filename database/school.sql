@@ -24,16 +24,16 @@ CREATE TABLE IF NOT EXISTS student (
 
 CREATE TABLE IF NOT EXISTS course (
     `course_id` INT AUTO_INCREMENT PRIMARY KEY,
-    `COURSE_NAME` VARCHAR(255) NOT NULL
+    `course_name` VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS class(
-    `class_id` INT AUTsO_INCREMENT PRIMARY KEY,
+    `class_id` INT AUTO_INCREMENT PRIMARY KEY,
     `class_name` VARCHAR(255),
     `prof_id` INT,
     `course_id` INT,
     FOREIGN KEY (`prof_id`) REFERENCES `proffessor` (`prof_id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
-    FOREIGN KEY (`course_id`) REFERENCES `COURSE` (`course_id`) ON UPDATE RESTRICT ON DELETE RESTRICT 
+    FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON UPDATE RESTRICT ON DELETE RESTRICT 
 );
 
 CREATE TABLE IF NOT EXISTS room (
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS room (
     `room_loc` VARCHAR(50),
     `room_cap` VARCHAR(50),
     `class_id` INT,
-    FOREIGN KEY (`class_id`) REFERENCES `CLASS`(`class_id`) ON UPDATE RESTRICT ON DELETE RESTRICT
+    FOREIGN KEY (`class_id`) REFERENCES `class`(`class_id`) ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS enroll(
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS enroll(
     `class_id` INT,
     `grade` VARCHAR(3),
     FOREIGN KEY (`stud_id`) REFERENCES `student`(`stud_id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
-    FOREIGN KEY (`class_id`) REFERENCES `CLASS`(`class_id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
+    FOREIGN KEY (`class_id`) REFERENCES `class`(`class_id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
     PRIMARY KEY (`stud_id`, `class_id`) 
 );
 
@@ -73,26 +73,26 @@ INSERT INTO `student` (`stud_fname`, `stud_lname`,`stud_street`,`stud_city`,`stu
 INSERT INTO `student` (`stud_fname`, `stud_lname`,`stud_street`,`stud_city`,`stud_zip`) VALUES ('Mike','Gil', 'street 8','city 8','zip 8');
 INSERT INTO `student` (`stud_fname`, `stud_lname`,`stud_street`,`stud_city`,`stud_zip`) VALUES ('Sauny','Curry','street 9','city 9','zip 9');
 INSERT INTO `student` (`stud_fname`, `stud_lname`,`stud_street`,`stud_city`,`stud_zip`) VALUES ('Adama','Stone','street 10','city 10','zip 10');
--- COURSE
-INSERT INTO `COURSE` (`COURSE_NAME`) VALUES('PROGRAMING');
-INSERT INTO `COURSE` (`COURSE_NAME`) VALUES('BIOLOGY');
-INSERT INTO `COURSE` (`COURSE_NAME`) VALUES('MATH');
-INSERT INTO `COURSE` (`COURSE_NAME`) VALUES('ENGLISH');
-INSERT INTO `COURSE` (`COURSE_NAME`) VALUES('PHYSICS');
--- CLASS
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A1',1,1);
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A2',2,3);
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A3',3,5);
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A4',5,4);
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A5',6,2);
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A6',1,1);
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A7',4,5);
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A8',6,3);
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A9',3,2);
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A10',4,4);
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A11',2,5);
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A12',2,3);
-INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('CLASS-A13',5,1);
+-- course
+INSERT INTO `course` (`course_name`) VALUES('PROGRAMING');
+INSERT INTO `course` (`course_name`) VALUES('BIOLOGY');
+INSERT INTO `course` (`course_name`) VALUES('MATH');
+INSERT INTO `course` (`course_name`) VALUES('ENGLISH');
+INSERT INTO `course` (`course_name`) VALUES('PHYSICS');
+-- class
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A1',1,1);
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A2',2,3);
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A3',3,5);
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A4',5,4);
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A5',6,2);
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A6',1,1);
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A7',4,5);
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A8',6,3);
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A9',3,2);
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A10',4,4);
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A11',2,5);
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A12',2,3);
+INSERT INTO `class` (`class_name`,`prof_id`,`course_id`) VALUES('class-A13',5,1);
 -- ROOM
 INSERT INTO `room` (`room_loc`, `room_cap`, `class_id`) VALUES('LOC-1',30,1);
 INSERT INTO `room` (`room_loc`, `room_cap`, `class_id`) VALUES('LOC-2',30,2);
@@ -147,27 +147,27 @@ SELECT CONCAT(P.prof_fname , " " , P.prof_lname) AS proffessor_NAME,
 CONCAT(S.stud_fname , " " , S.stud_lname) AS student_NAME,
 COUNT(C.class_id) AS TIME_MEET
 FROM proffessor AS P
-INNER JOIN CLASS AS C ON C.prof_id = P.prof_id
+INNER JOIN class AS C ON C.prof_id = P.prof_id
 INNER JOIN enroll AS E ON E.class_id = C.class_id
 INNER JOIN student AS S ON S.stud_id = E.stud_id
 GROUP BY proffessor_NAME,student_NAME;
 
 -- những course (distinct) mà 1 professor cụ thể đang dạy
-SELECT COURSE.COURSE_NAME
-FROM COURSE 
-INNER JOIN CLASS ON CLASS.course_id = COURSE.course_id
-INNER JOIN proffessor AS P ON P.prof_id = CLASS.prof_id
+SELECT course.course_name
+FROM course 
+INNER JOIN class ON class.course_id = course.course_id
+INNER JOIN proffessor AS P ON P.prof_id = class.prof_id
 WHERE P.prof_id = 2
-GROUP BY COURSE.COURSE_NAME;
+GROUP BY course.course_name;
 
 -- những course (distinct) mà 1 student cụ thể đang học
-SELECT COURSE.COURSE_NAME
-FROM COURSE
-INNER JOIN CLASS ON CLASS.course_id = COURSE.course_id
-INNER JOIN enroll AS E ON E.class_id = CLASS.class_id
+SELECT course.course_name
+FROM course
+INNER JOIN class ON class.course_id = course.course_id
+INNER JOIN enroll AS E ON E.class_id = class.class_id
 INNER JOIN student AS S ON S.stud_id = E.stud_id
 WHERE S.stud_id = 1
-GROUP BY COURSE.COURSE_NAME;
+GROUP BY course.course_name;
 
 -- điểm số là A, B, C, D, E, F tương đương với 10, 8, 6, 4, 2, 0, điểm số trung bình của 1 học sinh cụ thể (quy ra lại theo chữ cái, và xếp loại học lực (weak nếu avg < 5, average nếu >=5 < 8, good nếu >=8 )
 SELECT (
@@ -200,7 +200,7 @@ SELECT
     WHEN AVG(E.grade) >= 2 THEN "E"
     ELSE "F"
 END) AS MARK_LETTER, C.class_name
-FROM CLASS AS C
+FROM class AS C
 JOIN enroll AS E ON E.class_id = C.class_id
 GROUP BY C.class_id;
 
@@ -214,9 +214,9 @@ SELECT
     WHEN AVG(E.grade) >= 4 THEN "D"
     WHEN AVG(E.grade) >= 2 THEN "E"
     ELSE "F"
-END) AS MARK_LETTER, COURSE.COURSE_NAME
-FROM CLASS 
-JOIN COURSE ON COURSE.course_id = CLASS.course_id
-JOIN enroll AS E ON E.class_id = CLASS.class_id 
-GROUP BY COURSE.course_id;
+END) AS MARK_LETTER, course.course_name
+FROM class 
+JOIN course ON course.course_id = class.course_id
+JOIN enroll AS E ON E.class_id = class.class_id 
+GROUP BY course.course_id;
 
