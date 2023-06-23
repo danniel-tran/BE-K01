@@ -2,5 +2,6 @@ package service
 
 func (s *studentManagerService) GetProfessor(id int64) interface{} {
 	//TODO implement me
-	panic("implement me")
+	// panic("implement me")
+	return "hello"
 }

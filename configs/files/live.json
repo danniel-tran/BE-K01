@@ -1,6 +1,6 @@
 {
   "db": {
-    "addr": ""
+    "addr": "root:root@tcp(127.0.0.1:3307)/school?charset=utf8mb4&parseTime=True&loc=Local"
   },
   "redis": {
     "addr": ""

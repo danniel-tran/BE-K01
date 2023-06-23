@@ -6,6 +6,7 @@ import (
 
 type Professor struct {
 	gorm.Model
-	FirstName string `gorm:"first_name"`
-	LastName  string `gorm:"last_name"`
+	prof_id    int    `gorm:"prof_id;primaryKey"`
+	prof_lname string `gorm:"prof_lname"`
+	prof_fname string `gorm:"prof_fname"`
 }

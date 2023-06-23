@@ -1,6 +1,8 @@
 package service
 
 import (
+	"net/http"
+
 	"github.com/EngineerProOrg/BE-K01/pkg/repository"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
@@ -25,6 +27,8 @@ func NewService(db *gorm.DB, redis *redis.Client) StudentManagerService {
 
 func MappingService(r *gin.Engine, service StudentManagerService) {
 	r.GET("test", func(context *gin.Context) {
-		service.GetProfessor(1)
+		// service.GetProfessor(1)
+		// fmt.Println(service)
+		context.JSON(http.StatusOK, gin.H{"message": service})
 	})
 }
